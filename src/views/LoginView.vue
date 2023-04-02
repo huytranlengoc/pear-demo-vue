@@ -34,7 +34,7 @@ export default {
         const submit = async () => {
             const response = await axios.post('http://localhost:8000/api/login', data, { withCredentials: true });
 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
 
             await router.push('/');
         };
