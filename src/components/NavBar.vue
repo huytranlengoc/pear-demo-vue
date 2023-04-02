@@ -8,7 +8,11 @@
                 </li>
             </ul>
 
-            <div class="text-end">
+            <div class="text-end" v-if="auth">
+                <router-link to="/" class="btn btn-outline-light me-2" @click="logout">Logout</router-link>
+            </div>
+
+            <div class="text-end" v-if="!auth">
                 <router-link to="/login" class="btn btn-outline-light me-2">Login</router-link>
                 <router-link to="/register" class="btn btn-outline-light me-2">Register</router-link>
             </div>
@@ -18,8 +22,32 @@
 </template>
 
 <script>
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
+
 export default {
-    name: 'NavBar'
+    name: 'NavBar',
+    setup() {
+        const auth = ref(false);
+        onMounted(async () => {
+            try {
+                await axios.get('user');
+                auth.value = true;
+            } catch (e) {
+                auth.value = false;
+            }
+        });
+
+        const logout = () => {
+            axios.post('logout', {}, { withCredentials: true });
+            auth.value = false;
+        }
+
+        return {
+            auth,
+            logout
+        };
+    }
 }
 </script>
 

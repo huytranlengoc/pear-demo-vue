@@ -1,10 +1,13 @@
 import axios from 'axios';
 
+let refresh = false;
 
 axios.defaults.baseURL = 'http://localhost:8000/api/';
 
 axios.interceptors.response.use(resp => resp, async(error) => {
-    if (error.response.status === 401) {
+    if (error.response.status === 401 && !refresh) {
+        refresh = true;
+
         const response = await axios.post('refresh', {}, {withCredentials: true});
 
         if (response.status === 200) {
@@ -12,6 +15,6 @@ axios.interceptors.response.use(resp => resp, async(error) => {
             return axios(error.config);
         }
     }
-
+    refresh = false;
     return error;
 });
