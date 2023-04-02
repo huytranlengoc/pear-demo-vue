@@ -14,7 +14,7 @@ export default {
       const message = ref('You are not logged in!');
 
       onMounted(async () => {
-        const response = await axios.get('http://localhost:8000/api/user',  { withCredentials: true });
+        const response = await axios.get('user');
         message.value = `Welcome ${response.data.first_name} ${response.data.last_name}!`;
       });
 

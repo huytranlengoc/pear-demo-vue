@@ -48,8 +48,7 @@ export default {
       const router = useRouter();
 
       const submit = async () => {
-        await axios.post('http://localhost:8000/api/register', data);
-
+        await axios.post('register', data);
         await router.push('/login');
       }
 

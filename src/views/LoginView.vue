@@ -32,7 +32,7 @@ export default {
         const router = useRouter();
 
         const submit = async () => {
-            const response = await axios.post('http://localhost:8000/api/login', data, { withCredentials: true });
+            const response = await axios.post('login', data, { withCredentials: true });
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
 
