@@ -12,6 +12,9 @@
             <label for="floatingPassword">Password</label>
         </div>
 
+        <div class="mt-3">
+            <router-link to="/forgot">Forgot password?</router-link>
+        </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
     </form>
     </main>
