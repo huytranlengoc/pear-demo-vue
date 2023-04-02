@@ -22,25 +22,20 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { computed } from 'vue';
 import axios from 'axios';
+import { useStore } from 'vuex';
 
 export default {
     name: 'NavBar',
     setup() {
-        const auth = ref(false);
-        onMounted(async () => {
-            try {
-                await axios.get('user');
-                auth.value = true;
-            } catch (e) {
-                auth.value = false;
-            }
-        });
+        const store = useStore();
+        const auth = computed(() => store.state.auth);
 
-        const logout = () => {
+        const logout = async () => {
             axios.post('logout', {}, { withCredentials: true });
-            auth.value = false;
+            axios.defaults.headers.common['Authorization'] = '';
+            await store.dispatch('setAuth', false);
         }
 
         return {
